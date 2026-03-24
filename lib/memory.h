@@ -2,5 +2,5 @@
 #define MEMORY_H
 #include <termios.h>
 void activate_rawmode(struct termios *raw);
-void deactivate_rawmode(struct termios *raw);
+void deactivate_rawmode(void);
 #endif

@@ -11,14 +11,13 @@
 struct termios org; //to store the old settings / configuration of the terminal
 void activate_rawmode(struct termios *raw){
   tcgetattr(STDIN_FILENO,raw);
+  atexit(deactivate_rawmode);
   org=*raw;
   raw->c_lflag &= ~(ECHO | ICANON);
   tcsetattr(STDIN_FILENO,TCSAFLUSH,raw);
 };
 
-void deactivate_rawmode(struct termios *org){
-  tcgetattr(STDIN_FILENO,org);
-  org->c_lflag &= ~(ECHO | ICANON);
-  tcsetattr(STDIN_FILENO,TCSAFLUSH,org);
+void deactivate_rawmode(){
+  tcsetattr(STDIN_FILENO,TCSAFLUSH,&org);
 };
 
