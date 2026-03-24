@@ -13,7 +13,9 @@ void activate_rawmode(struct termios *raw){
   tcgetattr(STDIN_FILENO,raw);
   atexit(deactivate_rawmode);
   org=*raw;
-  raw->c_lflag &= ~(ECHO | ICANON);
+  raw->c_oflag &= ~(OPOST);
+  raw->c_iflag &= ~(IXON | ICRNL); //disable ctrl + s ctrl+q
+  raw->c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN); // disable echo canonical mode ctrl+c ctrl+z ctrl+v 
   tcsetattr(STDIN_FILENO,TCSAFLUSH,raw);
 };
 //to deactivate the raw mode
