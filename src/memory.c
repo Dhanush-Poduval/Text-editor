@@ -12,7 +12,7 @@ struct termios org; //to store the old settings / configuration of the terminal
 void activate_rawmode(struct termios *raw){
   tcgetattr(STDIN_FILENO,raw);
   org=*raw;
-  raw->c_lflag &= ~(ICANON);
+  raw->c_lflag &= ~(ECHO | ICANON);
   tcsetattr(STDIN_FILENO,TCSAFLUSH,raw);
 };
 
