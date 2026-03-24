@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.20.0)
+project(donkey)
 add_library(
   text_editor
   STATIC
@@ -9,13 +10,11 @@ target_include_directories(
   PUBLIC
   ${CMAKE_SOURCE_DIR}/lib
 )
-project(donkey)
-
 add_executable(
   editor
   src/main.c
 )
-target_link_directories (
+target_link_libraries(
   editor
   PRIVATE
   text_editor

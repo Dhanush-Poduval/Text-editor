@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtext_editor.a CMakeFiles/text_editor.dir/src/memory.c.o
+/usr/bin/ranlib libtext_editor.a

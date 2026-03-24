@@ -2,13 +2,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <termios.h>
-
-struct termios raw;
+#include "memory.h"
 int main(){
+  struct termios curr_state;
   //activate raw_mode
-  activate_rawmode(*raw);
+  activate_rawmode(&curr_state);
   char c;
-  //will read the byte of the char and store it in memory until it reaches the 0 byte which is the end of the string 
-  while(read(STDIN_FILENO,&c,1)==1);
+  //will read the byte of the char and the loop will run as long as its 1 
+  while(read(STDIN_FILENO,&c,1)==1){
+    if(c=='q'){
+      break;
+    }
+    printf("%c",c);
+  };
   return 0;
 };

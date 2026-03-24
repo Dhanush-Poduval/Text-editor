@@ -1,0 +1,4 @@
+/home/dhanush/Desktop/text_editor/build/CMakeFiles/text_editor.dir
+/home/dhanush/Desktop/text_editor/build/CMakeFiles/editor.dir
+/home/dhanush/Desktop/text_editor/build/CMakeFiles/edit_cache.dir
+/home/dhanush/Desktop/text_editor/build/CMakeFiles/rebuild_cache.dir
