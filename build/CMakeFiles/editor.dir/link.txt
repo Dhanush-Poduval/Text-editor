@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/editor.dir/src/main.c.o -o editor  libtext_editor.a 
