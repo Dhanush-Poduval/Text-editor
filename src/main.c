@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include "memory.h"
+#include <ctype.h>
 int main(){
   struct termios curr_state;
   //activate raw_mode
@@ -13,7 +14,11 @@ int main(){
     if(c=='q'){
       break;
     }
-    printf("%c",c);
-  };
+    if(iscntrl(c)){
+      printf("%d\n",c);
+    }else{
+      printf("%c\n",c);
+    }
+     };
   return 0;
 };
