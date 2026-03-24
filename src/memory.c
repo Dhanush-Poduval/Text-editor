@@ -11,15 +11,33 @@
 struct termios org; //to store the old settings / configuration of the terminal
 void activate_rawmode(struct termios *raw){
   tcgetattr(STDIN_FILENO,raw);
+  if(tcgetattr(STDIN_FILENO,raw)==-1){
+    error_handle("error in tcgetattr");
+  }
   atexit(deactivate_rawmode);
   org=*raw;
   raw->c_oflag &= ~(OPOST);
-  raw->c_iflag &= ~(IXON | ICRNL); //disable ctrl + s ctrl+q
+  raw->c_iflag &= ~(IXON | ICRNL | INPCK | ISTRIP | IXON); //disable ctrl + s ctrl+q
+  raw->c_cflag |= (CS8);
+  raw->c_cc[VMIN]=0;
+  raw->c_cc[VTIME]=1;
   raw->c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN); // disable echo canonical mode ctrl+c ctrl+z ctrl+v 
   tcsetattr(STDIN_FILENO,TCSAFLUSH,raw);
+  if(tcsetattr(STDIN_FILENO,TCSAFLUSH,raw)==-1){
+    error_handle("error in tcsetattr");
+  }
+
+
 };
 //to deactivate the raw mode
 void deactivate_rawmode(){
   tcsetattr(STDIN_FILENO,TCSAFLUSH,&org);
+  if(tcsetattr(STDIN_FILENO,TCSAFLUSH,&org)==-1){
+    error_handle("error in tcsetattr");
+  }
 };
+void error_handle(char *s){
+  perror(s);
+  exit(1);
+}; 
 
