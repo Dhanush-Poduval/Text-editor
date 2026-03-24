@@ -16,3 +16,9 @@ void activate_rawmode(struct termios *raw){
   tcsetattr(STDIN_FILENO,TCSAFLUSH,raw);
 };
 
+void deactivate_rawmode(struct termios *raw){
+  tcgetattr(STDIN_FILENO,org);
+  org->c_lflag &= ~(ECHO | ICANON);
+  tcsetattr(STDIN_FILENO,TCSAFLUSH,org);
+};
+
