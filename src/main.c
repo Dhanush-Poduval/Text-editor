@@ -4,6 +4,7 @@
 #include <termios.h>
 #include "memory.h"
 #include <ctype.h>
+
 /*
  * Activate raw mode with all the flags added 
  * makes the read fucntion return when inactive for 1000 ms , return 0 as default 
@@ -12,11 +13,13 @@
 */
 int main(){
   struct termios curr_state;
+  initEditor();
   //activate raw_mode
   activate_rawmode(&curr_state);
   char c;
   //will read the byte of the char and the loop will run as long as its 1 
   while(1){
+    /*
     char c='\0';
     read(STDIN_FILENO,&c,1);
     if(c=='q'){
@@ -27,6 +30,10 @@ int main(){
     }else{
       printf("%c\r\n",c);
     }
-     };
+    if(c==CTRL_KEY('q')) break;
+    */ 
+    editor_refresh_screen();
+    editor_process_key();
+  };
   return 0;
 };
